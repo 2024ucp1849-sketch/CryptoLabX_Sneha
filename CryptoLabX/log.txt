@@ -1,0 +1,8 @@
+from datetime import datetime
+
+LOG_FILE = "execution.log"
+
+def write_log(option):
+    with open(LOG_FILE, "a") as file:
+        now = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+        file.write(f"{now} --> {option}\n")

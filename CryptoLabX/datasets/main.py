@@ -2,50 +2,65 @@ import os
 from collections import Counter
 from datetime import datetime
 
-
 LOG_FILE = "execution.log"
 
 
+# Function to store logs
 def write_log(option):
     with open(LOG_FILE, "a") as file:
-        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        file.write(f"{now} -> {option}\n")
+        current_time = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+        file.write(f"{current_time} --> {option}\n")
 
 
+# Function to analyze a text file
 def analyze_file():
 
     filename = input("Enter filename from datasets folder: ")
 
-    path = os.path.join("datasets", filename)
+    filepath = os.path.join("datasets", filename)
 
-    if not os.path.exists(path):
+    if not os.path.exists(filepath):
         print("File not found!")
         return
 
-    with open(path, "r") as file:
+    with open(filepath, "r") as file:
         text = file.read()
 
+    # Number of characters
     characters = len(text)
+
+    # Number of words
     words = len(text.split())
+
+    # Number of lines
     lines = len(text.splitlines())
 
+    # Number of unique characters
     unique_characters = len(set(text))
 
-    letters = [c.lower() for c in text if c.isalpha()]
+    # Letter frequency
+    letters = []
+
+    for ch in text:
+        if ch.isalpha():
+            letters.append(ch.lower())
+
     frequency = Counter(letters)
 
-    print("\n----- File Analysis -----")
-    print("Characters :", characters)
-    print("Words      :", words)
-    print("Lines      :", lines)
-    print("Unique Characters :", unique_characters)
+    print("\n========== File Analysis ==========")
+    print("Characters       :", characters)
+    print("Words            :", words)
+    print("Lines            :", lines)
+    print("Unique Characters:", unique_characters)
 
     print("\nLetter Frequency")
+    print("----------------")
 
     for letter in sorted(frequency):
         print(letter, ":", frequency[letter])
 
 
+# Main Menu
 while True:
 
     print("\n========== CryptoLabX ==========")
@@ -55,7 +70,7 @@ while True:
     print("4. Analyze")
     print("5. Exit")
 
-    choice = input("Enter choice: ")
+    choice = input("Enter your choice: ")
 
     if choice == "1":
         write_log("Encrypt")
@@ -75,8 +90,8 @@ while True:
 
     elif choice == "5":
         write_log("Exit")
-        print("Good Bye!")
+        print("Thank You!")
         break
 
     else:
-        print("Invalid Choice")
+        print("Invalid Choice. Try Again.")
